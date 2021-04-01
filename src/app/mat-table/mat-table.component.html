@@ -1,0 +1,32 @@
+<mat-table [dataSource]="cars" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="brand">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Brand </mat-header-cell>
+    <mat-cell *matCellDef="let car"> {{car.brand}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="horsePower">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Horse Power </mat-header-cell>
+    <mat-cell *matCellDef="let car" (contextmenu)="onContextMenu($event, car)" > {{car.horsePower}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="color">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
+    <mat-cell *matCellDef="let car" (contextmenu)="onContextMenu($event, car)"> {{car.color}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+</mat-table>
+
+<div style="visibility: hidden; position: fixed"
+     [style.left]="contextMenuPosition.x"
+     [style.top]="contextMenuPosition.y"
+     [matMenuTriggerFor]="contextMenu">
+</div>
+
+<mat-menu #contextMenu="matMenu">
+  <ng-template matMenuContent let-item="item">
+    <button mat-menu-item (click)="searchInGoogle(item)">Search in Google</button>
+    <button mat-menu-item (click)="searchInDuckDuckGo(item)">Search in DuckDuckGo</button>
+  </ng-template>
+</mat-menu>
